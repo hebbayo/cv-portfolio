@@ -1,0 +1,35 @@
+# Secrets -- .env.example is the committed template
+.env
+.env.*
+!.env.example
+
+# Virtualenv
+venv/
+.venv/
+
+# collectstatic output, regenerated on every deploy
+staticfiles/
+
+# media/ is committed on purpose -- the project images are site content, not
+# throwaway uploads. Uploads made on the server still won't be in the repo.
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Databases
+*.sqlite3
+
+# Editors / OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

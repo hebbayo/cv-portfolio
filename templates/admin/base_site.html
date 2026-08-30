@@ -1,0 +1,122 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ subtitle }}Portfolio Admin{% endblock %}
+
+{% block branding %}
+  <h1 id="site-name"><a href="{% url 'admin:index' %}">PORTFOLIO<span class="term-cursor">_</span></a></h1>
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* The frontend palette poured into Django admin's own CSS variables.
+   Targeting html[data-theme=...] outranks base.css :root, so all three theme
+   states (auto/light/dark) land on the same dark terminal look. */
+html[data-theme="auto"], html[data-theme="light"], html[data-theme="dark"] {
+  --primary: #3b5bc6;
+  --primary-fg: #f5f4f0;
+  --secondary: #3b5bc6;
+  --accent: #3b5bc6;
+
+  --body-fg: #f5f4f0;
+  --body-bg: #0a0a0a;
+  --body-quiet-color: rgba(245, 244, 240, 0.55);
+  --body-loud-color: #f5f4f0;
+
+  --header-color: rgba(245, 244, 240, 0.7);
+  --header-bg: rgba(10, 10, 10, 0.72);
+  --header-branding-color: #f5f4f0;
+  --header-link-color: #f5f4f0;
+
+  --breadcrumbs-fg: rgba(245, 244, 240, 0.55);
+  --breadcrumbs-link-fg: #f5f4f0;
+  --breadcrumbs-bg: #101010;
+
+  --link-fg: #8fa5ee;
+  --link-hover-color: #3b5bc6;
+  --link-selected-fg: #f5f4f0;
+
+  --hairline-color: rgba(245, 244, 240, 0.1);
+  --border-color: rgba(245, 244, 240, 0.14);
+
+  --darkened-bg: #121212;
+  --selected-bg: #16161a;
+  --selected-row: rgba(59, 91, 198, 0.18);
+
+  --button-fg: #0a0a0a;
+  --button-bg: #3b5bc6;
+  --button-hover-bg: #4e6cd6;
+  --default-button-bg: #f5f4f0;
+  --default-button-hover-bg: #ffffff;
+  --close-button-bg: #2a2a2a;
+  --close-button-hover-bg: #3a3a3a;
+  --delete-button-bg: #b00020;
+  --delete-button-hover-bg: #d0002a;
+
+  --object-tools-fg: #0a0a0a;
+  --object-tools-bg: #f5f4f0;
+  --object-tools-hover-bg: #ffffff;
+
+  --message-success-bg: #12251a;
+  --message-warning-bg: #2a2410;
+  --message-error-bg: #2a1114;
+
+  --font-family-primary: "Inter", Helvetica, Arial, sans-serif;
+  --font-family-monospace: "JetBrains Mono", ui-monospace, monospace;
+}
+
+body { -webkit-font-smoothing: antialiased; }
+::selection { background: #3b5bc6; color: #0a0a0a; }
+
+#header {
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--hairline-color);
+  padding: 14px 40px;
+}
+#site-name a, .module h2, .module caption, h1, h2, h3 {
+  font-family: var(--font-family-monospace);
+  letter-spacing: -0.01em;
+}
+#site-name a { font-weight: 600; text-transform: none; }
+.term-cursor { color: #3b5bc6; animation: term-blink 1.1s steps(1) infinite; }
+@keyframes term-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+
+.module, .dashboard #content-main .module, #content-related .module {
+  border: 1px solid var(--hairline-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.module h2, .module caption {
+  background: #121212;
+  color: rgba(245, 244, 240, 0.6);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+div.breadcrumbs { border-bottom: 1px solid var(--hairline-color); letter-spacing: 0.06em; }
+
+a.button, input[type=submit], .submit-row input, .object-tools a {
+  border-radius: 2px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+}
+.object-tools a { font-family: var(--font-family-monospace); }
+
+input[type=text], input[type=password], input[type=email], input[type=url],
+input[type=number], input[type=tel], textarea, select, .vTextField {
+  background: #121212;
+  color: var(--body-fg);
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+}
+input:focus, textarea:focus, select:focus { outline: 1px solid #3b5bc6; }
+
+.submit-row { border-top: 1px solid var(--hairline-color); }
+#changelist-filter { border-left: 1px solid var(--hairline-color); }
+thead th { border-bottom: 1px solid var(--hairline-color); }
+</style>
+{% endblock %}

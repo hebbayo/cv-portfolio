@@ -1,0 +1,37 @@
+# Copy to /etc/systemd/system/portfolio.service on the server, then:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now portfolio
+#   sudo systemctl status portfolio
+# Logs: journalctl -u portfolio -f
+#
+# Adjust User and the paths if you deploy somewhere other than
+# /srv/portfolio as user "ali".
+
+[Unit]
+Description=portfolio gunicorn
+After=network.target
+
+[Service]
+User=ali
+Group=www-data
+WorkingDirectory=/srv/portfolio
+EnvironmentFile=/srv/portfolio/.env
+ExecStart=/srv/portfolio/venv/bin/gunicorn \
+    --workers 3 \
+    --bind unix:/run/portfolio/gunicorn.sock \
+    --umask 007 \
+    --access-logfile - \
+    --error-logfile - \
+    config.wsgi:application
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=on-failure
+RestartSec=5
+
+# /run is wiped on reboot, so systemd recreates /run/portfolio (owned
+# ali:www-data, mode 0755) before ExecStart. --umask 007 then makes the socket
+# itself 0770 -- writable by www-data, i.e. nginx, and nobody else.
+RuntimeDirectory=portfolio
+RuntimeDirectoryMode=0755
+
+[Install]
+WantedBy=multi-user.target

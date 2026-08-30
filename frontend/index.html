@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #0a0a0a; -webkit-font-smoothing: antialiased; }
+    * { box-sizing: border-box; }
+    ::selection { background: {{ accentColor }}; color: #0a0a0a; }
+    @keyframes term-blink { 0%, 50% { opacity: 1; } 50.01%, 100% { opacity: 0; } }
+    .term-cursor { display: inline-block; opacity: 0; }
+  </style>
+</helmet>
+
+<div style="background:#0a0a0a; color:#f5f4f0; font-family:'Inter',Helvetica,Arial,sans-serif; overflow-x:hidden;">
+
+  <nav style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px clamp(20px,4vw,56px); background:rgba(10,10,10,0.72); backdrop-filter:blur(12px); border-bottom:1px solid rgba(245,244,240,0.1); flex-wrap:wrap;">
+    <a href="#top" style="font-family:'JetBrains Mono',monospace; font-size:20px; letter-spacing:0.02em; color:#f5f4f0; text-decoration:none;">{{ profile.initials }}</a>
+    <div style="display:flex; gap:clamp(14px,2vw,32px); flex-wrap:wrap; font-size:13px; letter-spacing:0.06em; text-transform:uppercase;">
+      <a href="#about" style="color:rgba(245,244,240,0.7); text-decoration:none;" style-hover="color:#f5f4f0;">About</a>
+      <a href="#skills" style="color:rgba(245,244,240,0.7); text-decoration:none;" style-hover="color:#f5f4f0;">Skills</a>
+      <a href="#experience" style="color:rgba(245,244,240,0.7); text-decoration:none;" style-hover="color:#f5f4f0;">Experience</a>
+      <a href="#projects" style="color:rgba(245,244,240,0.7); text-decoration:none;" style-hover="color:#f5f4f0;">Projects</a>
+      <sc-if value="{{ showTestimonials }}"><a href="#testimonials" style="color:rgba(245,244,240,0.7); text-decoration:none;" style-hover="color:#f5f4f0;">Testimonials</a></sc-if>
+      <a href="#contact" style="color:rgba(245,244,240,0.7); text-decoration:none;" style-hover="color:#f5f4f0;">Contact</a>
+    </div>
+    <a href="#" download="" style="font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#0a0a0a; background:{{ accentColor }}; padding:10px 18px; border-radius:2px; text-decoration:none; white-space:nowrap;">Download CV</a>
+  </nav>
+
+  <header id="top" style="min-height:92vh; display:grid; grid-template-columns:minmax(0,1fr) minmax(220px,340px); align-items:center; gap:clamp(32px,5vw,64px); padding:clamp(32px,8vw,64px) clamp(20px,6vw,56px); position:relative; border-bottom:1px solid rgba(245,244,240,0.1);">
+    <div>
+      <div style="font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:{{ accentColor }}; margin-bottom:clamp(16px,3vw,28px);">{{ profile.title }}</div>
+      <h1 style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:clamp(3.6rem,10vw,9.5rem); line-height:0.94; letter-spacing:-0.02em; margin:0; max-width:100%;">{{ profile.name }}<span class="term-cursor" style="color:{{ accentColor }};">_</span></h1>
+      <p class="reveal" style="max-width:640px; font-size:clamp(16px,2vw,20px); line-height:1.6; color:rgba(245,244,240,0.65); margin:clamp(24px,4vw,40px) 0 0; opacity:0; transform:translateY(24px); transition:opacity 1.4s ease, transform 1.4s ease;">{{ profile.tagline }}</p>
+      <div style="display:flex; gap:28px; margin-top:clamp(28px,4vw,44px); flex-wrap:wrap; font-size:14px;">
+        <a href="{{ profile.githubUrl }}" style="color:#f5f4f0; text-decoration:underline; text-decoration-color:rgba(245,244,240,0.3);">GitHub</a>
+        <a href="{{ profile.linkedinUrl }}" style="color:#f5f4f0; text-decoration:underline; text-decoration-color:rgba(245,244,240,0.3);">LinkedIn</a>
+        <span style="color:rgba(245,244,240,0.5);">{{ profile.location }}</span>
+      </div>
+    </div>
+    <img src="./assets/profile.jpg" alt="{{ profile.name }}" style="width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:20px; opacity:0.92; box-shadow:0 40px 80px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(245,244,240,0.08); justify-self:center;" />
+  </header>
+
+  <section id="about" style="padding:clamp(64px,10vw,140px) clamp(20px,6vw,56px); border-bottom:1px solid rgba(245,244,240,0.1); display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:clamp(24px,5vw,60px);">
+    <div style="font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(245,244,240,0.5);">01 — About</div>
+    <p class="reveal" style="font-family:'JetBrains Mono',monospace; font-weight:400; font-size:clamp(1.3rem,2.6vw,2rem); line-height:1.45; margin:0; max-width:900px; opacity:0; transform:translateY(24px); transition:opacity 1.4s ease, transform 1.4s ease;">{{ profile.bio }}</p>
+  </section>
+
+  <section id="skills" style="padding:clamp(64px,10vw,140px) clamp(20px,6vw,56px); border-bottom:1px solid rgba(245,244,240,0.1);">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; gap:24px; margin-bottom:clamp(40px,6vw,72px); flex-wrap:wrap;">
+      <h2 style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:clamp(2.2rem,5.5vw,4rem); margin:0;">Skills<span class="term-cursor" style="color:{{ accentColor }};">_</span></h2>
+      <div style="font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(245,244,240,0.5);">02 — Capability</div>
+    </div><div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(20px,3vw,40px) clamp(32px,5vw,64px);">
+      <sc-for list="{{ skills }}" as="s" hint-placeholder-count="9">
+        <div class="reveal" style="opacity:0; transform:translateY(20px); transition:opacity 1.2s ease, transform 1.2s ease;">
+          <div style="display:flex; justify-content:space-between; font-size:15px; margin-bottom:10px;">
+            <span>{{ s.name }}</span>
+            <span style="color:rgba(245,244,240,0.4); font-size:12px; letter-spacing:0.08em; text-transform:uppercase;">{{ s.category }}</span>
+          </div>
+          <div style="height:3px; background:rgba(245,244,240,0.12); border-radius:2px; overflow:hidden;">
+            <div style="height:100%; background:{{ accentColor }}; width:{{ s.percent }}%; border-radius:2px;"></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    
+  </section>
+
+  <section id="experience" style="padding:clamp(64px,10vw,140px) clamp(20px,6vw,56px); border-bottom:1px solid rgba(245,244,240,0.1);">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; gap:24px; margin-bottom:clamp(40px,6vw,72px); flex-wrap:wrap;">
+      <h2 style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:clamp(2.2rem,5.5vw,4rem); margin:0;">Experience<span class="term-cursor" style="color:{{ accentColor }};">_</span></h2>
+      <div style="font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(245,244,240,0.5);">03 — Timeline</div>
+    </div>
+    <div style="display:flex; flex-direction:column;">
+      <sc-for list="{{ experience }}" as="e" hint-placeholder-count="3">
+        <div class="reveal" style="display:grid; grid-template-columns:minmax(120px,180px) 1fr; gap:clamp(16px,3vw,40px); padding:clamp(28px,3.5vw,44px) 0; border-top:1px solid rgba(245,244,240,0.1); opacity:0; transform:translateX(-24px); transition:opacity 1.4s ease, transform 1.4s ease;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:clamp(15px,1.6vw,18px); color:rgba(245,244,240,0.55);">{{ e.dates }}</div>
+          <div>
+            <h3 style="margin:0 0 8px; font-size:clamp(20px,2.4vw,28px); font-weight:600;">{{ e.role }} — {{ e.company }}</h3>
+            <p style="margin:0; color:rgba(245,244,240,0.65); font-size:15px; line-height:1.6; max-width:760px;">{{ e.description }}</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="projects" style="padding:clamp(64px,10vw,140px) clamp(20px,6vw,56px); border-bottom:1px solid rgba(245,244,240,0.1);">
+    <div style="display:flex; justify-content:space-between; align-items:baseline; gap:24px; margin-bottom:clamp(40px,6vw,72px); flex-wrap:wrap;">
+      <h2 style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:clamp(2.2rem,5.5vw,4rem); margin:0;">Projects<span class="term-cursor" style="color:{{ accentColor }};">_</span></h2>
+      <div style="font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(245,244,240,0.5);">04 — Selected work</div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:clamp(24px,3vw,40px);">
+      <sc-for list="{{ projects }}" as="p" hint-placeholder-count="4">
+        <div class="reveal" style="border:1px solid rgba(245,244,240,0.12); border-radius:4px; overflow:hidden; display:flex; flex-direction:column; opacity:0; transform:translateY(28px) scale(0.98); transition:opacity 1.2s ease, transform 1.2s ease;">
+          <div style="aspect-ratio:16/10; background:repeating-linear-gradient(135deg, rgba(245,244,240,0.06) 0px, rgba(245,244,240,0.06) 2px, transparent 2px, transparent 14px); background-color:#121212; display:flex; align-items:center; justify-content:center; font-family:monospace; font-size:12px; letter-spacing:0.05em; color:rgba(245,244,240,0.4);">PROJECT SCREENSHOT</div>
+          <div style="padding:clamp(20px,2.5vw,28px); display:flex; flex-direction:column; gap:12px; flex:1;">
+            <h3 style="margin:0; font-size:clamp(19px,2vw,23px); font-weight:600;">{{ p.title }}</h3>
+            <p style="margin:0; color:rgba(245,244,240,0.6); font-size:14px; line-height:1.55; flex:1;">{{ p.summary }}</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <sc-for list="{{ p.techList }}" as="t" hint-placeholder-count="3">
+                <span style="font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:rgba(245,244,240,0.55); border:1px solid rgba(245,244,240,0.15); border-radius:2px; padding:4px 8px;">{{ t }}</span>
+              </sc-for>
+            </div>
+            <div style="display:flex; gap:18px; margin-top:4px; font-size:13px;">
+              <a href="{{ p.liveUrl }}" style="color:{{ accentColor }}; text-decoration:none;">Live ↗</a>
+              <a href="{{ p.repoUrl }}" style="color:rgba(245,244,240,0.6); text-decoration:none;">Source</a>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <sc-if value="{{ showTestimonials }}">
+    <section id="testimonials" style="padding:clamp(64px,10vw,140px) clamp(20px,6vw,56px); border-bottom:1px solid rgba(245,244,240,0.1);">
+      <div style="display:flex; justify-content:space-between; align-items:baseline; gap:24px; margin-bottom:clamp(40px,6vw,72px); flex-wrap:wrap;">
+        <h2 style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:clamp(2.2rem,5.5vw,4rem); margin:0;">Testimonials<span class="term-cursor" style="color:{{ accentColor }};">_</span></h2>
+        <div style="font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:rgba(245,244,240,0.5);">05 — Word of mouth</div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(24px,3vw,40px);">
+        <sc-for list="{{ testimonials }}" as="t" hint-placeholder-count="3">
+          <div class="reveal" style="display:flex; flex-direction:column; gap:20px; opacity:0; transform:translateY(20px); transition:opacity 1.2s ease, transform 1.2s ease;">
+            <p style="font-family:'JetBrains Mono',monospace; font-size:clamp(1rem,1.4vw,1.2rem); line-height:1.55; margin:0; color:#f5f4f0;">“{{ t.quote }}”</p>
+            <div style="font-size:13px; color:rgba(245,244,240,0.55);">{{ t.name }} — {{ t.role }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </sc-if>
+
+  <section id="contact" style="padding:clamp(64px,10vw,140px) clamp(20px,6vw,56px);">
+    <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr); gap:clamp(32px,5vw,64px);">
+      <div>
+        <h2 style="font-family:'JetBrains Mono',monospace; font-weight:600; font-size:clamp(2.2rem,5.5vw,4rem); margin:0 0 20px;">Let's talk<span class="term-cursor" style="color:{{ accentColor }};">_</span></h2>
+        <p class="reveal" style="color:rgba(245,244,240,0.6); font-size:16px; line-height:1.6; max-width:400px; opacity:0; transform:translateY(20px); transition:opacity 1.2s ease, transform 1.2s ease;">{{ profile.email }}<br>{{ profile.location }}</p>
+      </div>
+      <form onSubmit="{{ handleSubmit }}" style="display:flex; flex-direction:column; gap:16px;">
+        <input name="name" placeholder="Your name" required="{{ true }}" style="background:transparent; border:none; border-bottom:1px solid rgba(245,244,240,0.25); color:#f5f4f0; font-size:16px; padding:12px 0; outline:none;">
+        <input name="email" type="email" placeholder="Your email" required="{{ true }}" style="background:transparent; border:none; border-bottom:1px solid rgba(245,244,240,0.25); color:#f5f4f0; font-size:16px; padding:12px 0; outline:none;">
+        <textarea name="message" placeholder="Message" required="{{ true }}" rows="4" style="background:transparent; border:none; border-bottom:1px solid rgba(245,244,240,0.25); color:#f5f4f0; font-size:16px; padding:12px 0; outline:none; resize:vertical; font-family:inherit;"></textarea>
+        <button type="submit" style="align-self:flex-start; margin-top:12px; background:{{ accentColor }}; color:#0a0a0a; border:none; padding:14px 28px; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; border-radius:2px; cursor:pointer;">Send message</button>
+        <p style="font-size:13px; color:rgba(245,244,240,0.5); min-height:18px;">{{ contactStatus }}</p>
+      </form>
+    </div>
+  </section>
+
+  <footer style="padding:24px clamp(20px,6vw,56px); border-top:1px solid rgba(245,244,240,0.1); display:flex; justify-content:space-between; font-size:12px; color:rgba(245,244,240,0.4); flex-wrap:wrap; gap:8px;">
+    <span>© {{ year }} {{ profile.name }}</span>
+    <span>Built with Django + JavaScript</span>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440, &quot;height&quot;: 900}, &quot;accentColor&quot;: {&quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#3b5bc6&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#3b5bc6&quot;, &quot;#c65d3b&quot;, &quot;#3f7a5c&quot;, &quot;#a8447a&quot;]}, &quot;showTestimonials&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;}}">
+const API_BASE =
+  window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://127.0.0.1:8000/api"
+    : "/api";
+
+class Component extends DCLogic {
+  state = { contactStatus: "", apiData: null, loading: true };
+
+  async loadResume() {
+    try {
+      const res = await fetch(`${API_BASE}/resume/`);
+      if (!res.ok) throw new Error(`API error: ${res.status}`);
+      const data = await res.json();
+      this.setState({ apiData: data, loading: false });
+    } catch (err) {
+      console.warn("Falling back to placeholder data:", err.message);
+      this.setState({ loading: false });
+    }
+  }
+
+  componentDidMount() {
+    this.loadResume();
+    const cursors = [...document.querySelectorAll(".term-cursor")];
+    const typed = new Set();
+
+    const typeText = (textNode, full) => {
+      textNode.textContent = "";
+      let i = 0;
+      const step = () => {
+        textNode.textContent = full.slice(0, i);
+        i++;
+        if (i <= full.length) setTimeout(step, 70);
+      };
+      step();
+    };
+
+    const setActive = (target) => {
+      cursors.forEach((c) => {
+        const active = c === target;
+        c.style.animation = active ? "term-blink 1s step-end infinite" : "none";
+        c.style.opacity = active ? "" : "0";
+      });
+    };
+
+    const activate = (cursor) => {
+      const textNode = cursor.previousSibling;
+      if (textNode && !typed.has(cursor)) {
+        typed.add(cursor);
+        typeText(textNode, textNode.textContent);
+      }
+      setActive(cursor);
+    };
+
+    activate(cursors[0]);
+    this._observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) activate(entry.target);
+        });
+      },
+      { threshold: 0.6 }
+    );
+    cursors.forEach((c) => this._observer.observe(c));
+
+    const reveals = [...document.querySelectorAll(".reveal")];
+    this._revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const delay = (Array.prototype.indexOf.call(el.parentElement.children, el) % 6) * 140;
+            setTimeout(() => {
+              el.style.opacity = "1";
+              el.style.transform = "translate(0,0) scale(1)";
+            }, delay);
+            this._revealObserver.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" }
+    );
+    reveals.forEach((el) => this._revealObserver.observe(el));
+  }
+
+  componentWillUnmount() {
+    if (this._observer) this._observer.disconnect();
+    if (this._revealObserver) this._revealObserver.disconnect();
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const payload = {
+      name: form.name.value,
+      email: form.email.value,
+      message: form.message.value,
+    };
+    this.setState({ contactStatus: "Sending…" });
+    try {
+      const res = await fetch(`${API_BASE}/contact/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error((await res.json()).error || "Something went wrong");
+      this.setState({ contactStatus: "Thanks — message received. I'll reply within a couple of days." });
+      form.reset();
+    } catch (err) {
+      this.setState({ contactStatus: `Error: ${err.message}` });
+    }
+  }
+
+  renderVals() {
+    const accentColor = this.props.accentColor ?? "#3b5bc6";
+    const showTestimonials = this.props.showTestimonials ?? true;
+    const api = this.state.apiData;
+
+    const defaultProfile = {
+      initials: "A.K.",
+      name: "Ali Kamrava",
+      title: "Backend Engineer & Full-Stack Builder",
+      tagline: "I design and ship Django-powered products end to end — from PostgreSQL schema to the pixels that render them. Based in Isfahan, working with teams worldwide.",
+      bio: "Five years building backend systems that don't fall over. I care most about clean data models, APIs that are pleasant to consume, and interfaces that get out of the way.",
+      email: "alikamrava2003@gmail.com",
+      location: "Isfahan, Iran\n",
+      githubUrl: "https://github.com/hebbayo",
+      linkedinUrl: "https://www.linkedin.com/in/ali-kamrava/",
+    };
+    const profile = api && api.profile
+      ? {
+          initials: api.profile.full_name.split(" ").map((n) => n[0]).join(".") + ".",
+          name: api.profile.full_name,
+          title: api.profile.title,
+          tagline: defaultProfile.tagline,
+          bio: api.profile.bio,
+          email: api.profile.email,
+          location: api.profile.location,
+          githubUrl: api.profile.github_url || defaultProfile.githubUrl,
+          linkedinUrl: api.profile.linkedin_url || defaultProfile.linkedinUrl,
+        }
+      : defaultProfile;
+
+    const defaultSkills = [
+      { name: "Python / Django", category: "Backend", proficiency: 5 },
+      { name: "PostgreSQL", category: "Backend", proficiency: 4 },
+      { name: "REST API Design", category: "Backend", proficiency: 5 },
+      { name: "FastAPI", category: "Backend", proficiency: 4 },
+      { name: "JavaScript (ES2024)", category: "Frontend", proficiency: 4 },
+      { name: "CSS / Responsive Layout", category: "Frontend", proficiency: 5 },
+      { name: "React", category: "Frontend", proficiency: 1.5 },
+      { name: "Docker & Compose", category: "DevOps", proficiency: 2 },
+      { name: "Nginx / Gunicorn", category: "DevOps", proficiency: 2 },
+    ].map((s) => ({ ...s, percent: s.proficiency * 20 }));
+    const skills = api && api.skills && api.skills.length
+      ? api.skills.map((s) => ({ name: s.name, category: s.category, percent: s.proficiency * 20 }))
+      : defaultSkills;
+
+    const defaultExperience = [
+      { role: "FullStack Freelancer Developer", company: "Self-employed", start: "2023", end: "Present", description: "Designing and building full-stack products end to end for independent clients, from Django backends to responsive frontends." },
+      { role: "Backend Developer", company: "BASA Company", start: "2021", end: "2023", description: "Built and shipped the internal analytics API used by 30+ teams; introduced Docker-based deploys." },
+      { role: "Junior Developer", company: "Chap Naghshe Jahan", start: "2019", end: "2021", description: "Maintained a Django monolith serving 200k monthly users; owned the migration to PostgreSQL 13." },
+    ].map((e) => ({ ...e, dates: `${e.start} — ${e.end}` }));
+    const experience = api && api.experience && api.experience.length
+      ? api.experience.map((e) => ({
+          role: e.role,
+          company: e.company,
+          description: e.description,
+          dates: `${e.start_date.slice(0, 4)} — ${e.end_date ? e.end_date.slice(0, 4) : "Present"}`,
+        }))
+      : defaultExperience;
+
+    const defaultProjects = [
+      { title: "CV Portfolio Engine", summary: "Self-hosted portfolio CMS powering this very site.", tech: "Django, PostgreSQL, JavaScript", repoUrl: "#", liveUrl: "#" },
+      { title: "Ledger", summary: "Double-entry accounting API for small businesses.", tech: "Django, DRF, Docker", repoUrl: "#", liveUrl: "#" },
+      { title: "Signal Board", summary: "Realtime ops dashboard for infrastructure alerts.", tech: "Python, WebSockets, React", repoUrl: "#", liveUrl: "#" },
+      { title: "Routewise", summary: "Delivery route optimizer with a Django backend.", tech: "Django, PostGIS, Celery", repoUrl: "#", liveUrl: "#" },
+    ].map((p) => ({ ...p, techList: p.tech.split(",").map((t) => t.trim()) }));
+    const projects = api && api.projects && api.projects.length
+      ? api.projects.map((p) => ({
+          title: p.title,
+          summary: p.summary,
+          techList: p.tech_stack || [],
+          repoUrl: p.repo_url || "#",
+          liveUrl: p.live_url || "#",
+        }))
+      : defaultProjects;
+
+    const defaultTestimonials = [
+      { quote: "One of the most reliable backend engineers I've worked with — ships fast without breaking things.", name: "Priya Nair", role: "Engineering Manager, Northwind Systems" },
+      { quote: "Turned an ambiguous brief into a production API in two weeks. Documentation was flawless.", name: "Marcus Webb", role: "CTO, Fieldstone Labs" },
+      { quote: "Rare mix of backend depth and product sense.", name: "Elena Torres", role: "Product Lead, Harbor & Co" },
+    ];
+    const testimonials = api && api.testimonials && api.testimonials.length
+      ? api.testimonials.map((t) => ({ quote: t.quote, name: t.author_name, role: t.author_role }))
+      : defaultTestimonials;
+
+    return {
+      accentColor,
+      showTestimonials,
+      profile,
+      skills,
+      experience,
+      projects,
+      testimonials,
+      contactStatus: this.state.contactStatus,
+      handleSubmit: (e) => this.handleSubmit(e),
+      year: new Date().getFullYear(),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
